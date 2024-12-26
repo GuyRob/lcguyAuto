@@ -1,0 +1,6 @@
+# Project exclude paths
+/allure-results/
+allure-report/
+*/allure-report/
+/target/
+allure-report/data/
