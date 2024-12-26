@@ -38,9 +38,10 @@ jobs:
             cd "$ALLURE_DIR"
             sudo mkdir -p /usr/local/bin
             sudo mv "bin/allure" /usr/local/bin/
-            cd - # Go back to the original directory
+            cd -
           done
-          allure --version
+          echo 'export PATH="/usr/local/bin:$PATH"' >> $GITHUB_ENV # Update PATH for the workflow (Recommended)
+          allure --version # Verify installation
 
       - name: Run Maven tests
         run: mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=target/allure-results
