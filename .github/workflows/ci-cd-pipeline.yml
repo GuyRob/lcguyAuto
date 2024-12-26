@@ -42,7 +42,6 @@ jobs:
           sudo chmod -R +x /opt/allure/bin
           echo 'ALLURE_HOME=/opt/allure' >> $GITHUB_ENV
           echo 'PATH=$ALLURE_HOME/bin:$PATH' >> $GITHUB_ENV
-          allure --version
 
       # Step 5: Create settings-security.xml for Maven
       - name: Create settings-security.xml
