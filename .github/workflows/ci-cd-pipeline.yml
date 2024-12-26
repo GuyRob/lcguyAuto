@@ -1,0 +1,69 @@
+name: CI/CD Pipeline for Selenium with Allure Report
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Optional: Trigger on pull requests to the main branch
+
+jobs:
+  test:
+    runs-on: windows-latest  # You can change this to 'windows-latest' or 'macos-latest' based on your setup
+
+    steps:
+    # Step 1: Check out the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Java (Adjust version as needed)
+    - name: Set up Java
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'  # You can use 'adoptopenjdk' or another distribution
+        java-version: '17'       # Use the Java version suitable for your project
+
+    # Step 3: Cache Maven dependencies (optional but speeds up the process)
+    - name: Cache Maven dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    # Step 4: Install Maven (if it's not pre-installed)
+    - name: Install Maven
+      run: |
+        sudo apt-get install maven
+
+    # Step 5: Build the project and run tests
+    - name: Run Selenium tests with Maven
+      run: mvn clean test
+
+    # Step 6: Install Allure Report (if not already installed)
+    - name: Install Allure Report
+      run: |
+        wget -qO- https://dl.bintray.com/qameta/generic/io/qameta/allure/allure-commandline/2.17.2/allure-commandline-2.17.2.tgz | tar xz -C /opt
+        sudo ln -s /opt/allure-2.17.2/bin/allure /usr/local/bin/allure
+
+    # Step 7: Generate Allure Report
+    - name: Generate Allure Report
+      run: |
+        allure generate target/allure-results --clean -o target/allure-report
+
+    # Step 8: Upload Allure Report as an artifact
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: allure-report
+        path: target/allure-report
+
+    # Optional: Display Allure Report in GitHub Pages (to be set up separately)
+    # This step can be used to push the report to a GitHub Pages branch if desired.
+    # - name: Deploy Allure Report to GitHub Pages
+    #   uses: peaceiris/actions-gh-pages@v3
+    #   with:
+    #     github_token: ${{ secrets.GITHUB_TOKEN }}
+    #     publish_dir: target/allure-report
