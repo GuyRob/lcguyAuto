@@ -13,18 +13,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code from the repository
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Step 2: Set up Java (version 17 in this case)
       - name: Set up Java
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'  # OpenJDK distribution
-          java-version: '17'       # Java 17 version
+          distribution: 'temurin'
+          java-version: '17'
 
-      # Step 3: Cache Maven dependencies to speed up builds
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -33,27 +30,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Step 4: Run Maven tests with Allure results output (specifying testng.xml for the test suite)
       - name: Run Maven tests
         run: mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=target/allure-results
 
-      # Step 5: Install Allure CLI for generating reports
       - name: Install Allure CLI
         run: |
-          curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/download/2.22.0/allure-2.22.0.zip
-          unzip allure.zip -d allure
-          sudo mv allure/allure-2.22.0/bin/allure /usr/local/bin/  # Move allure to bin for system-wide access
-          allure --version  # Verify that Allure was installed correctly
+          wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.23.0/allure-commandline-2.23.0.zip
+          unzip allure-commandline-2.23.0.zip
+          sudo mv allure-commandline-2.23.0/bin/allure /usr/local/bin/
+          allure --version
 
-      # Step 6: Generate Allure Report from test results
       - name: Generate Allure Report
         run: allure generate target/allure-results --clean -o target/allure-report
 
-      # Step 7: Upload the Allure Report as an artifact
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
           name: allure-report
           path: target/allure-report
-
-      # Optional: If you want to deploy or serve the Allure Report on a web server, add a deploy step here.
