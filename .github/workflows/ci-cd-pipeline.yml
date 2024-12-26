@@ -44,37 +44,43 @@ jobs:
           source $GITHUB_ENV
           allure --version
 
-      # Step 5: Run Maven tests with debug output
+      # Step 5: Create settings-security.xml for Maven
+      - name: Create settings-security.xml
+        run: |
+          mkdir -p ~/.m2
+          echo "${{ secrets.MAVEN_SETTINGS_SECURITY }}" > ~/.m2/settings-security.xml
+
+      # Step 6: Run Maven tests with debug output
       - name: Run Maven tests with debug output
         run: |
           mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=allure-results -X
 
-      # Step 6: List Allure results for debugging
+      # Step 7: List Allure results for debugging
       - name: List Allure Results
         run: |
           ls allure-results
 
-      # Step 7: Generate Allure Report
+      # Step 8: Generate Allure Report
       - name: Generate Allure Report
         run: |
           export PATH=/opt/allure/bin:$PATH
           allure generate allure-results --clean -o allure-report
 
-      # Step 8: Upload Allure Results as Artifact (updated to v4)
+      # Step 9: Upload Allure Results as Artifact (updated to v4)
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: allure-results
 
-      # Step 9: Upload Allure Report as Artifact (updated to v4)
+      # Step 10: Upload Allure Report as Artifact (updated to v4)
       - name: Upload Allure Report
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: allure-report
 
-      # Step 10: Provide Link to Allure Report
+      # Step 11: Provide Link to Allure Report
       - name: Provide Link to Allure Report
         run: |
           echo "The Allure Report has been generated and uploaded as an artifact."
