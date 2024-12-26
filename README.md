@@ -9,16 +9,16 @@
 
 • Java Selenium framework with TestNG and Allure Report.
 
-• Tests: 
- * P1_Homepage - testing: basic page load, banner navigation, youtube link and channel name, select best deal by category, open google map and compare with site location
- * P2_Navigation - Navigation between pages, selecting an item and compare if the correct item selected (The test is fail as expected, because different product is selected)
- * P3_Form - Filling the form section on homepage and contact us page, validating email format, and navigation to submitted page. 
+• Tests: 10 Passes and 1 Fail
+ * P1_Homepage - testing: basic page load, banner navigation, YouTube link and channel name, select the best deal by category, open Google map and compare with site location
+ * P2_Navigation - Navigation between pages, selecting an item and comparing if the correct item was selected (The test failed as expected because a different product was selected)
+ * P3_Form - Filling the form section on the homepage and contact us page, validate the email format, and navigate to the submitted page. 
 
-Tests executaion for running all tests is from file: testng.xml
+Tests execution for running all tests is from file: testng.xml
 
 • Tests Report: 
- * allure-results folder - contains all the logs with pass/fail results, and the screenshots.
- * allure-report folder - contains html and css to display the results
- * generateAllureReport.sh - script to generate the report and run local host web
+ * allure-results folder - contains all the logs with pass/fail results and the screenshots.
+ * allure-report folder - contains HTML and CSS to display the results
+ * generateAllureReport.sh - script to generate the report and run on local host web
 
 • CI/CD Pipeline: .github\workflows\ci-cd-pipeline.yml with a setup for the project
