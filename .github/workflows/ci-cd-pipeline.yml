@@ -40,8 +40,8 @@ jobs:
           unzip allure-commandline-2.23.0.zip -d allure-cli
           sudo mv allure-cli/allure-2.23.0 /opt/allure
           sudo chmod -R +x /opt/allure/bin
-          echo 'export PATH=/opt/allure/bin:$PATH' >> $GITHUB_ENV
-          source $GITHUB_ENV
+          echo 'ALLURE_HOME=/opt/allure' >> $GITHUB_ENV
+          echo 'PATH=$ALLURE_HOME/bin:$PATH' >> $GITHUB_ENV
           allure --version
 
       # Step 5: Create settings-security.xml for Maven
@@ -63,7 +63,6 @@ jobs:
       # Step 8: Generate Allure Report
       - name: Generate Allure Report
         run: |
-          export PATH=/opt/allure/bin:$PATH
           allure generate allure-results --clean -o allure-report
 
       # Step 9: Upload Allure Results as Artifact (updated to v4)
