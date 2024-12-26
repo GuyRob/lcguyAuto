@@ -34,10 +34,12 @@ jobs:
         run: |
           wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.23.0/allure-commandline-2.23.0.zip
           unzip allure-commandline-2.23.0.zip
-          ALLURE_DIR=$(find . -maxdepth 1 -type d -name "allure-commandline-*" -print0 | xargs -0)
-          cd "$ALLURE_DIR" # Change directory into the extracted Allure folder
-          sudo mkdir -p /usr/local/bin
-          sudo mv "bin/allure" /usr/local/bin/ # Move 'allure' from the current directory
+          find . -maxdepth 1 -type d -name "allure-commandline-*" -print0 | while IFS= read -r -d $'\0' ALLURE_DIR; do
+            cd "$ALLURE_DIR"
+            sudo mkdir -p /usr/local/bin
+            sudo mv "bin/allure" /usr/local/bin/
+            cd - # Go back to the original directory
+          done
           allure --version
 
       - name: Run Maven tests
