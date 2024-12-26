@@ -3,32 +3,32 @@ name: CI/CD Pipeline for Selenium with Allure Report
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to the main branch
+      - main
   pull_request:
     branches:
-      - main  # Optional: Trigger on pull requests to the main branch
+      - main
 
 jobs:
   test:
-    runs-on: windows-latest  # Use the Windows runner instead of ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     # Step 1: Checkout code
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # Step 2: Set up Java (Adjust version as needed)
+    # Step 2: Set up Java
     - name: Set up Java
       uses: actions/setup-java@v3
       with:
         distribution: 'temurin'
-        java-version: '17'  # Use the Java version compatible with your project
+        java-version: '17'
 
     # Step 3: Install Maven using Chocolatey
     - name: Install Maven using Chocolatey
       run: choco install maven
 
-    # Step 4: Cache Maven dependencies (optional but speeds up the process)
+    # Step 4: Cache Maven dependencies
     - name: Cache Maven dependencies
       uses: actions/cache@v3
       with:
@@ -37,15 +37,20 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Step 5: Run Maven tests and generate Allure results
-    - name: Run Maven tests and generate Allure results
-      run: mvn clean test -Dallure.results.directory=target/allure-results
+    # Step 5: Install Allure (if needed)
+    - name: Install Allure
+      run: |
+        curl -s https://raw.githubusercontent.com/allure-framework/allure2/master/allure-jenkins-plugin/install.sh | bash
 
-    # Step 6: Generate Allure Report
+    # Step 6: Run Maven tests and generate Allure results
+    - name: Run Maven tests and generate Allure results
+      run: mvn clean verify -Dallure.results.directory=target/allure-results
+
+    # Step 7: Generate Allure Report
     - name: Generate Allure Report
       run: mvn allure:report
 
-    # Step 7: Upload Allure Report as an artifact
+    # Step 8: Upload Allure Report as an artifact
     - name: Upload Allure Report
       uses: actions/upload-artifact@v3
       with:
