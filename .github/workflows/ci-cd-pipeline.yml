@@ -46,7 +46,7 @@ jobs:
 
       # Step 5: Run Maven tests
       - name: Run Maven tests
-        run: mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=allure-results -X
+        run: mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=allure-results
 
       # Step 6: List Allure results for debugging
       - name: List Allure Results
