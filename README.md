@@ -3,7 +3,7 @@
 • Video that present the test run and the test report: https://www.youtube.com/watch?v=SNVeKzUOor8
 
 • AWS Environment using S3 Static website: "templatemo_591_villa_agency" with adjustments for form submission.
-
+URL: http://lcguy.s3-website.eu-north-1.amazonaws.com/index.html
 • Java Selenium framework with TestNG and Allure Report.
 
 • Tests: 
