@@ -70,6 +70,7 @@ public class P1_Homepage extends base {
     public void P5_officeMap() {
         allure_Log("Getting the office location");
         String officeLocation = homepage.getOfficeLocation();
+        allure_LogAttachment("Office Map Location Upper Section", "P1", "map_section_upper");
         allure_Log("Scrolling to office map section");
         scroll_Element(homepage.txt_contactUs);
         allure_LogAttachment("Office Map Section", "P1", "map_section");

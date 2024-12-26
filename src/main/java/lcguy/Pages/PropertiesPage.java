@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 public class PropertiesPage extends base {
     By list_filters = By.xpath("//ul[@class='properties-filter']//a");
-    By list_properties = By.xpath("//div[@class='item' and not(parent::*[contains(@style, 'display: none')])]");
+    public By list_properties = By.xpath("//div[@class='item' and not(parent::*[contains(@style, 'display: none')])]");
 
     public void filterSelect(String filterName) {
         scroll_Element(list_filters);
@@ -40,4 +40,6 @@ public class PropertiesPage extends base {
 
         return new PropertyDetailsPage();
     }
+
+
 }

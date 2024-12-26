@@ -11,7 +11,7 @@ public class P3_Form extends base {
     String fullName = "Guy R";
     String email = "guy@ab.com";
     String subject = "More details about villa";
-    String message = "Hey,\nabout the villa in Portland, is bringing dog is allowed?";
+    String message = "Hey,\nabout the villa in Portland, can I bring dog?";
 
     @BeforeMethod
     public void before() {
@@ -51,7 +51,7 @@ public class P3_Form extends base {
         allure_LogAttachment("Form Section", "P3", "contactUs_nav");
         allure_Log("Filling form data with wrong email");
         contactPage.form_sendName(fullName);
-        contactPage.form_sendEmail(fullName);
+        contactPage.form_sendEmail(fullName); // Wrong email to see popup
         contactPage.form_sendSubject(subject);
         contactPage.form_sendMessage(message);
         contactPage.form_submit();

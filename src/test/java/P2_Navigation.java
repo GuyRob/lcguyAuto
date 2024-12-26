@@ -59,7 +59,9 @@ public class P2_Navigation extends base {
         allure_LogAttachment("Filter Applied", "P2", "properties_filter");
         allure_Log("Selecting a property by index " + propertyIndex);
         String expectedPropertyName = propertiesPage.getName(propertyIndex);
+        allure_LogAttachment("Properties List", "P2", "properties_list");
         PropertyDetailsPage propertyDetailsPage = propertiesPage.select(propertyIndex);
+        allure_Log("Property name: " + propertyDetailsPage.getName());
         boolean isCorrectPropertySelected = propertyDetailsPage.getName().equals(expectedPropertyName);
         allure_LogAttachment("Selected Property", "P2", "properties_link");
         Assert.assertTrue(isCorrectPageAppears && isCorrectPropertySelected, "TEST FAIL: Not navigated to properties page \nOr selected property is mismatch name \nexpected: " + expectedPropertyName + "\n actual: " + propertyDetailsPage.getName());
