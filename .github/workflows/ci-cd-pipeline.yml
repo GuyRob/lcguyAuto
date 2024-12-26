@@ -37,16 +37,22 @@ jobs:
       - name: Run Maven tests
         run: mvn clean test -DsuiteXmlFile=testng.xml -Dallure.results.directory=target/allure-results
 
-      # Step 5: Upload Allure results
-      - name: Upload Allure results
+      # Step 5: Install Allure CLI
+      - name: Install Allure CLI
+        run: |
+          wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.23.0/allure-commandline-2.23.0.zip
+          unzip allure-commandline-2.23.0.zip -d allure-cli
+          sudo mv allure-cli/allure-commandline-2.23.0/bin/allure /usr/local/bin/allure
+          chmod +x /usr/local/bin/allure
+          allure --version
+
+      # Step 6: Generate Allure Report
+      - name: Generate Allure Report
+        run: allure generate target/allure-results --clean -o target/allure-report
+
+      # Step 7: Upload Allure Report as Artifact
+      - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
-          name: allure-results
-          path: target/allure-results
-
-      # Step 6: Publish Allure Report
-      - name: Publish Allure Report
-        uses: allure-framework/actions-allure-report@v2
-        with:
-          results-dir: target/allure-results
-          report-dir: target/allure-report
+          name: allure-report
+          path: target/allure-report
