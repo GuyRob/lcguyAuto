@@ -56,7 +56,7 @@ jobs:
       # Step 7: Generate Allure Report
       - name: Generate Allure Report
         run: |
-          source $GITHUB_ENV
+          export PATH=/opt/allure/bin:$PATH
           allure generate allure-results --clean -o allure-report
 
       # Step 8: Upload Allure Report as Artifact
