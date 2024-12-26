@@ -59,7 +59,14 @@ jobs:
           export PATH=/opt/allure/bin:$PATH
           allure generate allure-results --clean -o allure-report
 
-      # Step 8: Upload Allure Report as Artifact
+      # Step 8: Upload Allure Results as Artifact
+      - name: Upload Allure Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: allure-results
+          path: allure-results
+
+      # Step 9: Upload Allure Report as Artifact
       - name: Upload Allure Report
         uses: actions/upload-artifact@v3
         with:
