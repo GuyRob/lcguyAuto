@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default Suite">
+
+    <test name="lcguyAuto">
+        <classes>
+            <class name="P1_Homepage" />
+            <class name="P2_Navigation" />
+            <class name="P3_Form" />
+
+            <!-- Add more class elements for other test classes -->
+        </classes>
+    </test>
+</suite>
