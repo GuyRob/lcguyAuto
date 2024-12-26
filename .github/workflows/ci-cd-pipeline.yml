@@ -72,3 +72,9 @@ jobs:
         with:
           name: allure-report
           path: allure-report
+
+      # Step 10: Run allure open command (Optional)
+      - name: Run Allure Open Command
+        run: |
+          export PATH=/opt/allure/bin:$PATH
+          allure open allure-report
