@@ -84,4 +84,4 @@ jobs:
       - name: Provide Link to Allure Report
         run: |
           echo "The Allure Report has been generated and uploaded as an artifact."
-          echo "You can download and view it from the GitHub Actions UIA."
+          echo "You can download and view it from the GitHub Actions UI."
